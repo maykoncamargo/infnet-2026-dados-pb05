@@ -15,7 +15,7 @@ def criar_venda(lista):
 
 def adicionar_produto(venda, produto, qtd, preco):
     id = criar_id(venda[3])
-    total = int(qtd) * int(preco)
+    total = float(qtd) * float(preco)
     venda[3].append([id, produto, qtd, preco, total])
 
 

@@ -1,6 +1,7 @@
 from tabulate import tabulate 
 from vendas import *
 from arquivo import *
+from models import Produto
 
 ID = 0
 NOME_PRODUTO = 1
@@ -9,18 +10,21 @@ PRECO_PRODUTO = 3
 
 # usar constantes para valores
 def procurar_preço_produto(id_estoque, lista):
-    for linha in lista:
-        if linha["id"] == id_estoque:
-            return linha['preco']
+    for produto in lista:
+        if produto.id == id_estoque:
+            return produto.preco
     print(f"Produto ID {id_estoque} não encontrado!")
     return None
         
 def procurar_nome_produto(id_estoque, lista):
-    for linha in lista:
-        if linha["id"] == id_estoque:
-            return linha['produto']
+    for produto in lista:
+        if produto.id == id_estoque:
+            return produto.nome
     print(f"Produto ID {id_estoque} não encontrado!")
     return None
+
+#estoque = ler_estoque()
+#print(procurar_nome_produto(1, estoque))
 
 def total_unidades_vendidas(vendas):
     resultado = []
@@ -46,8 +50,8 @@ def relatório_produtos_sem_estoque(estoque, vendas):
     unidades_vendidas = total_unidades_vendidas(vendas)
     resultado = []
     for produto in estoque:                                   
-        nome = produto["produto"]
-        quantidade_estoque = produto["qtd"]
+        nome = produto.nome
+        quantidade_estoque = produto.estoque
         for vendido in unidades_vendidas:
             if vendido[0] == nome:
                 saldo = int(quantidade_estoque) - int(vendido[1])
@@ -61,11 +65,11 @@ def relatório_produtos_sem_estoque(estoque, vendas):
 def atualizar_estoque(estoque, vendas):
     produtos_vendidos = total_unidades_vendidas(vendas)
     for produto, qtd in produtos_vendidos:
-        for linha in estoque:
-            if produto == linha["produto"]:
-                qtd_est = linha["qtd"]
+        for p in estoque:
+            if produto == p.nome:
+                qtd_est = p.estoque
                 qtd_vendido = qtd
-                linha["qtd"] =  int(qtd_est) - int(qtd_vendido)
+                p.estoque =  int(qtd_est) - int(qtd_vendido)
     gravar_estoque(estoque)
 
 

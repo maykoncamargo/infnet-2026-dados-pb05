@@ -4,6 +4,7 @@ from vendas import *
 from util import *
 from arquivo import *
 
+
 def abrir_caixa(estoque, vendas):               
     opcao = menu_inicar()
     match opcao:
@@ -35,10 +36,8 @@ def entrar_quantidade_vendida():
             try:
                 qtd = (input("Quantidade: "))
                 if qtd.isdigit() or int(qtd) >= 0:
-                    return qtd
-                
+                    return int(qtd)
                 print('ERRO: Quantidade deve ser maior que zero.')
-                
             except Exception as erro:
                 print("ERRO: Um erro inesperado aconteceu", erro)
 
@@ -57,7 +56,7 @@ def iniciar_atendimento(estoque, vendas):
         produto = procurar_nome_produto(int(item), estoque)
         preco = procurar_preço_produto(int(item), estoque)
 
-        adicionar_produto(venda,produto,qtd, preco)
+        adicionar_produto(venda, produto, qtd, preco)
     
     imprimir_nf(venda)
     vendas.append(venda)
