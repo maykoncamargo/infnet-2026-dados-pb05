@@ -1,101 +1,80 @@
 from tabulate import tabulate 
 from vendas import *
-from arquivo import *
-from models import Produto
+import produto_service
 
-ID = 0
-NOME_PRODUTO = 1
-QUANTIDADE = 2
-PRECO_PRODUTO = 3
+def relatorio_produtos_sem_estoque(vendas):
+    # DataFrame de produtos do banco
+    produtos_df = dataFrame_produtos()
 
-# usar constantes para valores
-def procurar_preço_produto(id_estoque, lista):
-    for produto in lista:
-        if produto.id == id_estoque:
-            return produto.preco
-    print(f"Produto ID {id_estoque} não encontrado!")
-    return None
-        
-def procurar_nome_produto(id_estoque, lista):
-    for produto in lista:
-        if produto.id == id_estoque:
-            return produto.nome
-    print(f"Produto ID {id_estoque} não encontrado!")
-    return None
-
-#estoque = ler_estoque()
-#print(procurar_nome_produto(1, estoque))
-
-def total_unidades_vendidas(vendas):
-    resultado = []
-    # intera sobre clientes
+    # Consolidar todos os itens vendidos
+    rows = []
     for venda in vendas:
-        #iterra na vendas
-        for item in venda[3]:
-            nome = item[NOME_PRODUTO]
-            quantidade = item[QUANTIDADE]
-            encontrado = False
-            for r in resultado:
-                if r[0] == nome:
-                    r[1] += quantidade
-                    encontrado = True
-                    break
-            if not encontrado:
-                resultado.append([nome, quantidade])    
-    return resultado
-    
+        itens_df = dataFrame_itens_pedido(venda['itens'])
+        rows.append(itens_df)
+
+    if not rows:
+        print("Nenhuma venda registrada.")
+        return
+
+    # Unir todos os itens em um único DataFrame
+    todos_itens_df = pd.concat(rows, ignore_index=True)
+
+    # Total vendido por produto
+    vendidos_df = todos_itens_df.groupby('ID Produto').agg(
+        Vendido=('Quantidade Vendida', 'sum')
+    ).reset_index()
+
+    # Merge com produtos
+    df = pd.merge(produtos_df, vendidos_df, left_on='ID', right_on='ID Produto', how='left')
+    df['Vendido'] = df['Vendido'].fillna(0)
+
+    # Saldo de estoque
+    df['Saldo'] = df['Quantidade'] - df['Vendido']
+
+    # Filtrar sem estoque
+    df_sem_estoque = df[df['Saldo'] <= 0][['Nome', 'Quantidade', 'Vendido', 'Saldo']]
+
+    # Relatório
+    print('='*50)
+    print('Produtos sem Estoque')
+    print('='*50)
+    if df_sem_estoque.empty:
+        print("Nenhum produto sem estoque.")
+    else:
+        print(df_sem_estoque.to_string(index=False))
+    print('='*50)
 
 
-def relatório_produtos_sem_estoque(estoque, vendas):    
-    unidades_vendidas = total_unidades_vendidas(vendas)
-    resultado = []
-    for produto in estoque:                                   
-        nome = produto.nome
-        quantidade_estoque = produto.estoque
-        for vendido in unidades_vendidas:
-            if vendido[0] == nome:
-                saldo = int(quantidade_estoque) - int(vendido[1])
-                if saldo <= 0:
-                    resultado.append(nome)
-    print('Produto sem estoque: ')
-    for p in resultado:
-        print(p)
 
+def atualizar_estoque(vendas):
+    produtos_df = dataFrame_produtos()
 
-def atualizar_estoque(estoque, vendas):
-    produtos_vendidos = total_unidades_vendidas(vendas)
-    for produto, qtd in produtos_vendidos:
-        for p in estoque:
-            if produto == p.nome:
-                qtd_est = p.estoque
-                qtd_vendido = qtd
-                p.estoque =  int(qtd_est) - int(qtd_vendido)
-    gravar_estoque(estoque)
+    rows = []
+    for venda in vendas:
+        itens_df = dataFrame_itens_pedido(venda['itens'])
+        rows.append(itens_df)
 
+    if not rows:
+        print("Nenhuma venda registrada.")
+        return
 
-"""
-estoque = ler_estoque()
-print(estoque)
+    todos_itens_df = pd.concat(rows, ignore_index=True)
 
-vendas = [
-    ['Cliente 1', '08/03/2026', '14:32:10', [
-        [1, 'Produto 1', 1, 20.00],
-        [2, 'Produto 2', 2, 40.00],
-    ]],
-    ['Cliente 2', '08/03/2026', '14:32:10', [
-        [3, 'Produto 3', 3, 60.00],
-        [4, 'Produto 4', 4, 80.00],
-    ]],
-    ['Cliente 3', '08/03/2026', '14:32:10', [
-        [5, 'Produto 5', 5, 100.00],
-        [1, 'Produto 1', 1, 30.00],
-    ]],
-]
+    vendidos_df = todos_itens_df.groupby('ID Produto').agg(
+        Vendido=('Quantidade Vendida', 'sum')
+    ).reset_index()
 
+    df = pd.merge(produtos_df, vendidos_df, left_on='ID', right_on='ID Produto', how='left')
+    df['Vendido'] = df['Vendido'].fillna(0)
+    df['Nova Quantidade'] = df['Quantidade'] - df['Vendido']
 
-#print(total_unidades_vendidas(vendas))
+    for _, row in df.iterrows():             # ← indentado dentro da função
+        produto = produto_service.consultar_produto(int(row['ID']))
+        produto_service.alterar_produto(
+            int(row['ID']),
+            produto.nome,
+            int(row['Nova Quantidade']),
+            produto.preco
+        )
 
-#est = atualizar_estoque(estoque, vendas)
-#print(est)
-
-#gravar_estoque(est)"""
+    print("Estoque atualizado com sucesso!") # ← indentado dentro da função
