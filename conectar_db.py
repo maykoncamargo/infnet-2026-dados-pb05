@@ -1,25 +1,21 @@
 import os.path
-import sqlite3
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from models import Base
 
 BANCO = "mercado.db"
 DIR = os.path.dirname(os.path.abspath(__file__))
 BANCO = os.path.join(DIR, "Dados", BANCO)
-
+BANCO_URL = f"sqlite:///{BANCO}"
 
 def verificar_db():
     if not os.path.exists(BANCO):
         print("Erro: banco não existe")
         exit()
 
-def connect():
-    try:
-        return sqlite3.connect(BANCO)
-    except Exception as ex:
-        raise Exception(f"Erro: {ex}")
+engine = create_engine(BANCO_URL, echo=False)
 
-def disconnect(conn):
-    if conn:
-        conn.close()
+SessionLocal = sessionmaker(bind=engine)
+Base.metadata.create_all(engine)
 
-
-#print(verificar_db())
+#verificar_db()
