@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+Dados/__pycache__/
+Dados/mercado.db
+*.db
+*.sqlite3
