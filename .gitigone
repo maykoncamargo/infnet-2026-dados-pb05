@@ -1,4 +1,5 @@
 .venv/
+.venv
 __pycache__/
 .DS_Store
 .huskyrc.json
@@ -58,3 +59,13 @@ src/testTestingRootWkspc/coverageWorkspace/.coverage
 
 # ignore ai artifacts generated and placed in this folder
 ai-artifacts/*
+# Banco de dados
+*.db
+*.sqlite3
+
+# Arquivos gerados pelo scraping
+*.csv
+
+# Variáveis de ambiente
+.env
+*.env
