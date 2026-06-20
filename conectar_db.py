@@ -1,7 +1,7 @@
 import os.path
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Base
+from Models.produto import Base
 
 BANCO = "mercado.db"
 DIR = os.path.dirname(os.path.abspath(__file__))

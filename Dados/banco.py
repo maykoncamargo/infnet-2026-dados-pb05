@@ -12,7 +12,7 @@ from sqlalchemy import text
 import pandas as pd
 import produto_service
 
-from models import Base, Produto
+from Models.produto import Base, Produto
 
 engine = create_engine("sqlite:///Dados/mercado.db", echo=True)
 

@@ -12,7 +12,7 @@ Todos os erros decorrentes da camada de serviço deverão ser repassados para a 
 
 """
 import produto_repository
-from models import Produto
+from Models.produto import Produto
 from util import *
 
 def incluir_produto(nome, quantidade, preco):

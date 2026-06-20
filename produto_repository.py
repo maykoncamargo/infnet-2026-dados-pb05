@@ -5,7 +5,7 @@ Os possíveis erros nessa camada devem ser repassados e tratadas pelas camadas s
 
 """ 
 from sqlalchemy import select
-from models import Produto
+from Models.produto import Produto
 from conectar_db import SessionLocal
 
 def incluir_produto(produto):
