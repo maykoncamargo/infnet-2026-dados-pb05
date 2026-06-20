@@ -1,6 +1,6 @@
-from tabulate import tabulate 
 from vendas import *
 import produto_service
+
 
 def relatorio_produtos_sem_estoque(vendas):
     # DataFrame de produtos do banco
@@ -43,7 +43,6 @@ def relatorio_produtos_sem_estoque(vendas):
     else:
         print(df_sem_estoque.to_string(index=False))
     print('='*50)
-
 
 
 def atualizar_estoque(vendas):
