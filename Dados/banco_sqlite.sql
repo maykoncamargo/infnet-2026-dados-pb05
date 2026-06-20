@@ -2,12 +2,18 @@
 .mode table
 
 DROP TABLE IF EXISTS produtos;
+DROP TABLE IF EXISTS clientes;
 
 CREATE TABLE produtos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
     quantidade INTEGER NOT NULL,
     preco REAL NOT NULL
+);
+
+CREATE TABLE clientes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
 );
 
 INSERT INTO produtos VALUES

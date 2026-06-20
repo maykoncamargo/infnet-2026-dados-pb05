@@ -4,7 +4,7 @@ from sqlalchemy import Integer, String, Float
 class Base(DeclarativeBase):
     pass
 
-class Produto(Base):
+class Cliente(Base):
     __tablename__ = "clientes"
     
     id: Mapped[int] = mapped_column(primary_key=True)
