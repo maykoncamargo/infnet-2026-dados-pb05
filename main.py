@@ -36,6 +36,6 @@ def fechar_caixa(vendas):
 
 if __name__ == "__main__":
     iniciar_banco_de_dados()
-    produto_service.consultar_produtos()
+    Service.produto_service.consultar_produtos()
     vendas = criar_caixa()
     abrir_caixa(vendas)

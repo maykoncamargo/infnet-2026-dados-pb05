@@ -4,7 +4,7 @@ sem precisar passar pela camada de interface com o usuário,
 
 ou seja, pelo código do arquivo produto_crud.py.
 """
-import produto_service
+import Service.produto_service as produto_service
 
 def incluir_produto():
     try:

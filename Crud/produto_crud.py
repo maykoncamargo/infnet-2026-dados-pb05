@@ -5,7 +5,7 @@ O seu programa não é obrigado a utilizar esse arquivo como a camada de interfa
 ou seja, realizar a interação do operador do caixa com o sistema, mas, em algumas situações, seria possível.
 """
 
-import produto_service
+import Service.produto_service as produto_service
 from util import *
 
 def incluir_produto():

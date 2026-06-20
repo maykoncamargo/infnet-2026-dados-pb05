@@ -1,5 +1,5 @@
 import util
-import produto_service
+import Service.produto_service as produto_service
 import produto_cliente
 import pandas as pd
 

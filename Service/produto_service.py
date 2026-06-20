@@ -11,7 +11,7 @@ Todos os erros decorrentes da camada de serviço deverão ser repassados para a 
 
 
 """
-import produto_repository
+import Repository.produto_repository as produto_repository
 from Models.produto import Produto
 from util import *
 

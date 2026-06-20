@@ -1,5 +1,5 @@
 from vendas import *
-import produto_service
+import Service.produto_service as produto_service
 
 
 def relatorio_produtos_sem_estoque(vendas):
@@ -68,8 +68,8 @@ def atualizar_estoque(vendas):
     df['Nova Quantidade'] = df['Quantidade'] - df['Vendido']
 
     for _, row in df.iterrows():             # ← indentado dentro da função
-        produto = produto_service.consultar_produto(int(row['ID']))
-        produto_service.alterar_produto(
+        produto = Service.produto_service.consultar_produto(int(row['ID']))
+        Service.produto_service.alterar_produto(
             int(row['ID']),
             produto.nome,
             int(row['Nova Quantidade']),

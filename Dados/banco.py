@@ -9,7 +9,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import text
 
 import pandas as pd
-import produto_service
+import Service.produto_service as produto_service
 
 from Models.produto import Base
 from Models.clientes import Base
