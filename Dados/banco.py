@@ -2,14 +2,15 @@ import sys
 import os
 
 # Adiciona os caminhos necessários
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))         # .../PB-04/Dados/
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # .../PB-04/
+sys.path.append(os.path.dirname(os.path.abspath(__file__))) 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from sqlalchemy import create_engine
 from sqlalchemy import text
 
 import pandas as pd
 import Service.produto_service as produto_service
+import Service.cliente_service as cliente_service
 
 from Models.produto import Base
 from Models.clientes import Base
@@ -30,7 +31,7 @@ def carregar_dados_clientes():
     df = pd.read_json("Dados/clientes.json")
     for _, row in df.iterrows():
         print(f"Inserindo produto: {row['nome']}")
-        #cliente_service.incluir_produto(row['nome'])
+        cliente_service.incluir_cliente(row['nome'])
 
 def limpar_tabela_produtos():
     with engine.connect() as connection:
@@ -44,15 +45,20 @@ def limpar_tabela_clientes():
 
 
 def limpar_tabelas():
-    limpar_tabela_produtos
-    limpar_tabela_clientes
+    limpar_tabela_produtos()
+    limpar_tabela_clientes()
 
 def carregar_dados():
-    carregar_dados_produtos
-    carregar_dados_clientes
+    carregar_dados_produtos()
+    carregar_dados_clientes()
 
 #criar_banco()
 #carregar_dados_produtos()
 #carregar_dados_clientes()
 #limpar_tabela_produtos()
 #limpar_tabela_clientes()
+
+
+#criar_banco()
+#limpar_tabelas()
+#carregar_dados()

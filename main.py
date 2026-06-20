@@ -2,9 +2,10 @@ import Dados.banco
 from estoque import *
 from vendas import *
 from util import *
+from Service.produto_service import produto_service
 
 def iniciar_banco_de_dados():
-    Dados.banco.limpar_tabela_produtos()
+    Dados.banco.limpar_tabelas()
     Dados.banco.criar_banco()
     Dados.banco.carregar_dados()
 
@@ -36,6 +37,6 @@ def fechar_caixa(vendas):
 
 if __name__ == "__main__":
     iniciar_banco_de_dados()
-    Service.produto_service.consultar_produtos()
+    produto_service.consultar_produtos()
     vendas = criar_caixa()
     abrir_caixa(vendas)
