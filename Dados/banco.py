@@ -12,32 +12,20 @@ from sqlalchemy import text
 import pandas as pd
 import produto_service
 
+from models import Base, Produto
+
 engine = create_engine("sqlite:///Dados/mercado.db", echo=True)
 
 def criar_banco():
-    class Base(DeclarativeBase):
-        pass
-
-    class Produto(Base):
-        __tablename__ = "produtos"
-
-        id = Column(Integer, primary_key=True, autoincrement=True)
-        nome = Column(String, nullable=False)
-        quantidade = Column(Integer, nullable=False)
-        preco = Column(Float, nullable=False)
-
-        def __repr__(self):
-            return f"Produto(id={self.id}, nome={self.nome}, quantidade={self.quantidade}, preco={self.preco})"
-
     Base.metadata.create_all(engine)
+    print("Banco Criado com Sucesso")
 
 def carregar_dados():
     df = pd.read_csv("Dados/produtos.csv")
-    print(df)
+    # print(df)
     for _, row in df.iterrows():
         print(f"Inserindo produto: {row['nome']}, Quantidade: {row['quantidade']}, Preço: {row['preco']}")
         produto_service.incluir_produto(row['nome'], row['quantidade'], row['preco'])
-
 
 def limpar_tabela_produtos():
     with engine.connect() as connection:
