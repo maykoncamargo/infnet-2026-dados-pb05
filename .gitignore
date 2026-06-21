@@ -77,3 +77,6 @@ ai-artifacts/*
 # Variáveis de ambiente
 .env
 *.env
+
+# remove o banco do sistema
+Dados/*.db
