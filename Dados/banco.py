@@ -30,7 +30,7 @@ def carregar_dados_produtos():
 def carregar_dados_clientes():
     df = pd.read_json("Dados/clientes.json")
     for _, row in df.iterrows():
-        print(f"Inserindo produto: {row['nome']}")
+        print(f"Inserindo cliente: {row['nome']}")
         cliente_service.incluir_cliente(row['nome'])
 
 def limpar_tabela_produtos():
