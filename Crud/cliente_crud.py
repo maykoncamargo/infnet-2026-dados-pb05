@@ -24,6 +24,17 @@ def consultar_clientes():
     except Exception as ex:
         print(ex)
 
+def consultar_cliente():
+    id = entrar_id()
+    try:
+        cliente = cliente_service.consultar_clientes(id)
+        print(cliente)
+    except ValueError as ex:
+        print(ex)
+    except Exception as ex:
+        print(ex)
+
+
 def alterar_cliente():
     id = entrar_id()
     nome = entrar_nome()

@@ -28,6 +28,16 @@ def consultar_produtos():
     except Exception as ex:
         print(ex)
 
+def consultar_produto():
+    id = entrar_id()
+    try:
+        produto = produto_service.consultar_produto(id)
+        print(produto)
+    except ValueError as ex:
+        print(ex)    
+    except Exception as ex:
+        print(ex)
+
 def alterar_produto():
     id = entrar_id()
     nome = entrar_nome_produto()

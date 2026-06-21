@@ -3,6 +3,7 @@ from estoque import *
 from vendas import *
 from util import *
 from Service.produto_service import produto_service
+from Crud import produto_crud
 
 def iniciar_banco_de_dados():
     Dados.banco.limpar_tabelas()
@@ -37,6 +38,6 @@ def fechar_caixa(vendas):
 
 if __name__ == "__main__":
     iniciar_banco_de_dados()
-    produto_service.consultar_produtos()
+    produto_crud.consultar_produtos()
     vendas = criar_caixa()
     abrir_caixa(vendas)
