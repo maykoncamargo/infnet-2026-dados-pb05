@@ -13,7 +13,7 @@ def criar_pedido(vendas):
 
 def item_pedido(itens):              
     id_venda = util.criar_id(itens)
-    id_produto = util.entrar_item_vendido()
+    id_produto = entrar_item_vendido()
     quantidade_vendida = util.entrar_quantidade()
     return {
         'id_venda': id_venda,
@@ -37,7 +37,6 @@ def entrar_item_vendido():
             return produto.id
         except Exception as erro:
             print("ERRO: Um erro inesperado aconteceu", erro)
-
 
 def dataFrame_produtos():
     dados = produto_service.consultar_produtos()
