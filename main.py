@@ -21,6 +21,7 @@ def abrir_caixa(vendas):
         case _: print("opcao Inválida")
 
 def iniciar_atendimento(vendas):
+    print("Iniciando Atendimento ao Cliente: ")
     pedido = criar_pedido(vendas)
     itens = itens_pedido()   
     pedido['itens'] = itens
