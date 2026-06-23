@@ -67,9 +67,9 @@ def atualizar_estoque(vendas):
     df['Vendido'] = df['Vendido'].fillna(0)
     df['Nova Quantidade'] = df['Quantidade'] - df['Vendido']
 
-    for _, row in df.iterrows():             # ← indentado dentro da função
-        produto = Service.produto_service.consultar_produto(int(row['ID']))
-        Service.produto_service.alterar_produto(
+    for _, row in df.iterrows():
+        produto = produto_service.consultar_produto(int(row['ID']))
+        produto_service.alterar_produto(
             int(row['ID']),
             produto.nome,
             int(row['Nova Quantidade']),
