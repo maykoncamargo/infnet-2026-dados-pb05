@@ -55,7 +55,7 @@ def excluir_cliente(id):
     cliente_repository.excluir_cliente(id)
 
 
-incluir_cliente("Coca-colaaaa")
+#incluir_cliente("Coca-colaaaa")
 #alterar_cliente(5, "Coca")
 #print(consultar_cliente(5))
 #excluir_cliente(5)
