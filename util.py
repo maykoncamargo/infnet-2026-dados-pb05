@@ -1,7 +1,8 @@
-from estoque import *
-from vendas import *
-from datetime import date, datetime
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
+from datetime import date, datetime
 
 def menu_inicar():
     print("========= MENU =========")

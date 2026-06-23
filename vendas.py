@@ -1,11 +1,11 @@
 import util
 import Service.produto_service as produto_service
-import produto_cliente
 import pandas as pd
+from cliente import *
 
 def criar_pedido(vendas):
     id = util.criar_id(vendas)
-    cliente = f'Cliente {id}'
+    cliente = entrar_cliente()
     data = util.data_atual()
     hora = util.hora_atual()
     itens = []

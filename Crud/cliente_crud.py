@@ -4,8 +4,11 @@ A ideia é permitir que o administrador do sistema faça alguma correção neces
 O seu programa não é obrigado a utilizar esse arquivo como a camada de interface com o usuário, 
 ou seja, realizar a interação do operador do caixa com o sistema, mas, em algumas situações, seria possível.
 """
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import Service.cliente_service as cliente_service
+from Service import cliente_service
 from util import *
 
 def incluir_cliente():
@@ -27,8 +30,8 @@ def consultar_clientes():
 def consultar_cliente():
     id = entrar_id()
     try:
-        cliente = cliente_service.consultar_clientes(id)
-        print(cliente)
+        cliente = cliente_service.consultar_cliente(id)
+        return cliente
     except ValueError as ex:
         print(ex)
     except Exception as ex:
@@ -55,3 +58,6 @@ def excluir_cliente():
         print(ex)
     except Exception as ex:
         print(ex)
+
+#print(consultar_cliente())
+#incluir_cliente()

@@ -1,14 +1,13 @@
-import Dados.banco
+import Dados.banco as banco
 from estoque import *
 from vendas import *
 from util import *
-from Service.produto_service import produto_service
 from Crud import produto_crud
 
 def iniciar_banco_de_dados():
-    Dados.banco.limpar_tabelas()
-    Dados.banco.criar_banco()
-    Dados.banco.carregar_dados()
+    banco.limpar_tabelas()
+    banco.criar_banco()
+    banco.carregar_dados()
 
 def criar_caixa():
     vendas = []
@@ -34,7 +33,6 @@ def fechar_caixa(vendas):
     relatorio_fechamento_caixa(vendas)
     relatorio_produtos_sem_estoque(vendas)
     atualizar_estoque(vendas)
-
 
 if __name__ == "__main__":
     iniciar_banco_de_dados()

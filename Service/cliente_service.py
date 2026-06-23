@@ -6,13 +6,12 @@ Outro exemplo, na alteração de um produto, além das regras de negócios da co
 A camada de serviço deverá implementar todas as funcionalidades do CRUD de produtos, mesmo que o caixa não as utilize. 
 Todos os erros decorrentes da camada de serviço deverão ser repassados para a camada superior de onde partiu a chamada para o serviço.
 """
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from util import *
 
 import Repository.cliente_repository as cliente_repository
 from Models.clientes import Cliente
-from util import *
+
 
 def incluir_cliente(nome):
     if not validar_nome(nome):
@@ -20,9 +19,11 @@ def incluir_cliente(nome):
     cliente = Cliente(None, nome)
     cliente_repository.incluir_cliente(cliente)
 
+
 def consultar_clientes():
     cliente = cliente_repository.consultar_clientes()
     return cliente
+
 
 def consultar_cliente(id):
     if not validar_id(id):
@@ -31,6 +32,7 @@ def consultar_cliente(id):
     if not cliente:
         raise ValueError(f"Erro: cliente {id} não encontrado")
     return cliente
+
 
 def alterar_cliente(id, nome):
     if not validar_id(id):
@@ -43,6 +45,7 @@ def alterar_cliente(id, nome):
     cliente.nome = nome
     cliente_repository.alterar_cliente(id, cliente)
 
+
 def excluir_cliente(id):
     if not validar_id(id):
         raise ValueError(f"Erro: id do cliente {id} inválido")
@@ -52,7 +55,7 @@ def excluir_cliente(id):
     cliente_repository.excluir_cliente(id)
 
 
-#incluir_cliente("Coca-colaaaa")
+incluir_cliente("Coca-colaaaa")
 #alterar_cliente(5, "Coca")
 #print(consultar_cliente(5))
 #excluir_cliente(5)
