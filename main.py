@@ -1,10 +1,12 @@
 import Dados.banco as banco
+import Dados.produtos_scraping as produtos_scraping
 from estoque import *
 from vendas import *
 from util import *
 from Crud import produto_crud
 
 def iniciar_banco_de_dados():
+    produtos_scraping.scraping_produtos()
     banco.limpar_tabelas()
     banco.criar_banco()
     banco.carregar_dados()
